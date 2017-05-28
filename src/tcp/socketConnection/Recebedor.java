@@ -7,6 +7,7 @@ package tcp.socketConnection;
 
 import java.io.InputStream;
 import java.util.Scanner;
+import tcp.ui.MainUiFrame;
 
 /**
  *
@@ -23,8 +24,9 @@ public class Recebedor implements Runnable {
     public void run() {
         // recebe msgs do servidor e imprime na tela
         Scanner s = new Scanner(this.servidor);
+        System.out.println("s");
         while (s.hasNextLine()) {
-            System.out.println(s.nextLine());
+            MainUiFrame.lblSaida.setText(s.nextLine());
         }
     }
 }

@@ -17,12 +17,10 @@ public class TCPCliente {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
         ServerConnectionFrame mainFrame = new ServerConnectionFrame();
+        //centraliza a janela
+        mainFrame.setLocationRelativeTo(null);
         mainFrame.setVisible(true);
-
-        
-
     }
 
 }

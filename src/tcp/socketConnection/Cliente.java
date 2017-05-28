@@ -26,9 +26,9 @@ public class Cliente {
 
     private String ip;
     private int porta;
-    
-    PrintWriter saida;
-    InputStreamReader entrada;
+
+    private PrintStream saida;
+    private InputStreamReader entrada;
 
     private int status;
 
@@ -39,45 +39,37 @@ public class Cliente {
         this.porta = porta;
     }
 
-    public void conectarServidor() {
-        if (socket == null) {
-            try {
-                socket = new Socket(this.ip, this.porta);
-                this.status = Constantes.STATUS_CONNECTION_SUCCESSFUL;
-
-                saida = new PrintWriter(socket.getOutputStream());
-                entrada = new InputStreamReader(socket.getInputStream());
-
-            } catch (IOException ex) {
-                this.status = Constantes.STATUS_CONNECTION_FAILED;
-                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-    }
-
     public int getStatus() {
         return this.status;
     }
 
-    public void executa() throws UnknownHostException, IOException {
-        Socket cliente = new Socket(this.ip, this.porta);
-        System.out.println("O cliente se conectou ao servidor!");
+    public void conectaServidor() throws IOException {
+        Socket cliente;
+        cliente = new Socket(this.ip, this.porta);
+
+        this.status = Constantes.STATUS_CONNECTION_SUCCESSFUL;
+
+        saida = new PrintStream(cliente.getOutputStream());
+
+        System.out.println("O cliente se conectou ao servidor!fffff");
 
         // thread para receber mensagens do servidor
         Recebedor r = new Recebedor(cliente.getInputStream());
         new Thread(r).start();
 
-        // lê msgs do teclado e manda pro servidor
-        Scanner teclado = new Scanner(System.in);
-        PrintStream saida = new PrintStream(cliente.getOutputStream());
-        while (teclado.hasNextLine()) {
-            saida.println(teclado.nextLine());
-        }
+    }
 
-        saida.close();
-        teclado.close();
-        cliente.close();
+    public void enviarMensagem(String message) throws IOException {
+        if (message != null) {
+            //out.write(message);
+            //out.flush();
+            // inexplicavelmente, tive que duplicar a linha, se nao so funcionava com dois cliques para enviar
+            saida.println(message);
+            saida.println(message);
+
+            saida.flush();
+
+        }
     }
 
     public String getIp() {
@@ -95,7 +87,5 @@ public class Cliente {
     public void setPorta(int porta) {
         this.porta = porta;
     }
-
-   
 
 }

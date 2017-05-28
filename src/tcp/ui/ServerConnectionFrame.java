@@ -21,7 +21,7 @@ public class ServerConnectionFrame extends javax.swing.JFrame {
     public static String ip = "";
     public static int porta = 0;
 
-    public static Cliente cli;
+    public Cliente cli;
 
     /**
      * Creates new form mainFrame
@@ -53,7 +53,11 @@ public class ServerConnectionFrame extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setText("Conecte ao servidor:");
 
+        inputIp.setText("192.168.0.140");
+
         jLabel2.setText("IP");
+
+        inputPorta.setText("8000");
 
         jLabel3.setText("Porta");
 
@@ -118,17 +122,20 @@ public class ServerConnectionFrame extends javax.swing.JFrame {
 
         cli.setIp(ip);
         cli.setPorta(porta);
-        cli.conectarServidor();
+        try {
+            cli.conectaServidor();
+        } catch (IOException ex) {
+            Logger.getLogger(ServerConnectionFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         int status = cli.getStatus();
 
         if (status == Constantes.STATUS_CONNECTION_SUCCESSFUL) {
             this.setVisible(false);
             MainUiFrame mainUiFrame = new MainUiFrame(cli);
-
+            mainUiFrame.setLocationRelativeTo(null);
             mainUiFrame.setVisible(true);
 
-            System.out.println("Servidor conectado com sucesso, abrindo tela principal!");
         } else if (status == Constantes.STATUS_CONNECTION_FAILED) {
             System.out.println("Erro ao conectar com o ");
             JOptionPane.showMessageDialog(null, "Erro ao conectar com o servidor");
