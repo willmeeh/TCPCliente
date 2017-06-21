@@ -248,7 +248,11 @@ public class MainUiFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNoticiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoticiasActionPerformed
-        // TODO add your handling code here:
+        try {
+            cliente.enviarMensagem("/noticias");
+        } catch (IOException ex) {
+            Logger.getLogger(MainUiFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnNoticiasActionPerformed
 
     private void btnTemperaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTemperaturaActionPerformed
