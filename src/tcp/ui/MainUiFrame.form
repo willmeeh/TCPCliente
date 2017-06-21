@@ -295,7 +295,7 @@
         <Component class="javax.swing.JLabel" name="lblSaida">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Dialog" size="24" style="1"/>
+              <Font name="Arial" size="24" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
           </Properties>

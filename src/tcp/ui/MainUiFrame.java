@@ -193,7 +193,7 @@ public class MainUiFrame extends javax.swing.JFrame {
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Saída");
 
-        lblSaida.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        lblSaida.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         lblSaida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
