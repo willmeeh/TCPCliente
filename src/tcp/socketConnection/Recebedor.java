@@ -7,6 +7,10 @@ package tcp.socketConnection;
 
 import java.io.InputStream;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import tcp.main.Constantes;
 import tcp.ui.MainUiFrame;
 
 /**
@@ -15,18 +19,44 @@ import tcp.ui.MainUiFrame;
  */
 public class Recebedor implements Runnable {
 
-    private InputStream servidor;
+    private InputStream entrada;
+    private Scanner entradaListener;
 
-    public Recebedor(InputStream servidor) {
-        this.servidor = servidor;
+    public Recebedor(InputStream entrada) {
+        this.entrada = entrada;
     }
 
     public void run() {
-        // recebe msgs do servidor e imprime na tela
-        Scanner s = new Scanner(this.servidor);
+        entradaListener = new Scanner(this.entrada);
         System.out.println("s");
-        while (s.hasNextLine()) {
-            MainUiFrame.lblSaida.setText(s.nextLine());
+        // O scanner fica a espera de mensagens do servidor
+        while (entradaListener.hasNextLine()) {
+            // Seta a resposta do servidor na tela
+            MainUiFrame.lblSaida.setText(entradaListener.nextLine());
         }
+        
+        // instancia uma thread para verificar se a conexão continua ativa
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                boolean isConnected = true;
+                
+                while(isConnected) {
+                    
+                    if (!entradaListener.hasNext()) {
+                        JOptionPane.showMessageDialog(null, "A conexão com o servidor foi encerrada!");
+                        MainUiFrame.lblSaida.setText(Constantes.MSG_DEFAULT_END_CONNECTION);
+                        isConnected = false;
+                        Cliente.setStatus(Constantes.STATUS_CONNECTION_FAILED);
+                    }
+                    
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Recebedor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }).start();
     }
 }

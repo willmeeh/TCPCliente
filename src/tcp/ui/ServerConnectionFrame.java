@@ -114,33 +114,40 @@ public class ServerConnectionFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConnectActionPerformed
-        if (inputPorta.getText().equals("")) {
-
-        }
+        
+        // obtem os dados informados pelo cliente
         porta = Integer.parseInt(inputPorta.getText());
         ip = inputIp.getText();
 
+        // popula os dados informados pelo cliente
         cli.setIp(ip);
         cli.setPorta(porta);
+        
+        int status = Constantes.STATUS_CONNECTION_FAILED;
+        
         try {
-            cli.conectaServidor();
+            //tenta estabelecer uma conexao
+            status = cli.conectaServidor();
         } catch (IOException ex) {
             Logger.getLogger(ServerConnectionFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        int status = cli.getStatus();
-
+        // Verifica o status da conexa
+        
+        // Se conseguiu conectar no servidor, abre a interface para a troca de mensagens
         if (status == Constantes.STATUS_CONNECTION_SUCCESSFUL) {
             this.setVisible(false);
             MainUiFrame mainUiFrame = new MainUiFrame(cli);
             mainUiFrame.setLocationRelativeTo(null);
             mainUiFrame.setVisible(true);
-
-        } else if (status == Constantes.STATUS_CONNECTION_FAILED) {
-            System.out.println("Erro ao conectar com o ");
+            
+            
+            MainUiFrame.lblSaida.setText("<html><body style='color:#00ff00;'>Conexão bem sucedida!</body></html>");
+        } 
+        // Se nao conseguiu conectar no servidor, exibe uma mensagem de erro
+        else if (status == Constantes.STATUS_CONNECTION_FAILED) {
             JOptionPane.showMessageDialog(null, "Erro ao conectar com o servidor");
         }
-
 
     }//GEN-LAST:event_btnConnectActionPerformed
 

@@ -247,8 +247,11 @@ public class MainUiFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
     private void btnNoticiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoticiasActionPerformed
         try {
+            // solicita o comando autores noticias
             cliente.enviarMensagem("/noticias");
         } catch (IOException ex) {
             Logger.getLogger(MainUiFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -262,6 +265,7 @@ public class MainUiFrame extends javax.swing.JFrame {
         String param = latitude + "," + longitude;
         String msg = "/temperatura?coordenadas=" + param;
         try {
+            // solicita o comando temperatura, passando as coordenadas como parametro
             cliente.enviarMensagem(msg);
         } catch (IOException ex) {
             Logger.getLogger(MainUiFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -270,6 +274,7 @@ public class MainUiFrame extends javax.swing.JFrame {
 
     private void btnAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutoresActionPerformed
         try {
+            // solicita o comando autores
             cliente.enviarMensagem("/autores");
         } catch (IOException ex) {
             Logger.getLogger(MainUiFrame.class.getName()).log(Level.SEVERE, null, ex);
